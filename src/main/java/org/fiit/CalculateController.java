@@ -12,11 +12,9 @@ public class CalculateController {
 
     //function tries to find cayley graph with the lowest degree and generated group size set from outside
     public List<Integer> calculate(int groupSize){
-        System.out.println("Calculating bounds for graph...");
         calculateBounds(groupSize);
 
         for (int currentGraphDegree = 2; currentGraphDegree <= maximumDegree; currentGraphDegree++){
-            System.out.println("Calculating for graph degree: " + currentGraphDegree);
             int modifiedGraphDegree = isOdd(currentGraphDegree)? currentGraphDegree - 1: currentGraphDegree;
             int modifiedGroupSize = !isOdd(groupSize)? groupSize - 2: groupSize - 1;
             double combinations = ArithmeticUtils.binomialCoefficientDouble(
@@ -45,11 +43,9 @@ public class CalculateController {
                             System.out.println("Graph can be created with degree: " + currentGraphDegree);
                             return generators;
                         }
-                        System.out.println("Graph check failed with generators: " + generators + "...Moving on");
                     }
                     else {
                         missedCombinationsCounter++;
-                        //System.out.println("Generators already exist...");
                     }
                 }
                 else {
@@ -75,6 +71,8 @@ public class CalculateController {
             bound = (int) Math.ceil(1 + ((Math.pow(newDegree, 2)) / 2.0));
         }
         this.maximumDegree = newDegree;
+        System.out.println("Maximum graph degree: " + this.maximumDegree);
+        System.out.println("Moore bound: " + bound);
         //set true if group has self-inverse generator
         this.selfInverseElement = currentN % 2 == 0;
     }
